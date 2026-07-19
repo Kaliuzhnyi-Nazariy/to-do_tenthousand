@@ -10,9 +10,9 @@ export default function Home() {
       <h1>TO-DO</h1>
       <Suspense fallback={null}>
         <Search />
+        <CreateToDoModal />
+        <TodoList />
       </Suspense>
-      <CreateToDoModal />
-      <TodoList />
     </main>
   );
 }
