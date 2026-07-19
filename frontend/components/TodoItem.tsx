@@ -1,6 +1,8 @@
 import { updateTodo } from "@/features/requests";
+import { toastError, toastSuccess } from "@/lib/toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+import type { AxiosError } from "axios";
 
 const TodoItem = ({
   id,
@@ -38,6 +40,11 @@ const TodoItem = ({
           paramsOrder,
         ],
       });
+
+      toastSuccess("To-do status updated!");
+    },
+    onError(err: AxiosError<{ message: string }>) {
+      toastError(err.response?.data.message);
     },
   });
 

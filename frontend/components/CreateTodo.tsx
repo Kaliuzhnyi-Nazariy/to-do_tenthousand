@@ -9,6 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Spinner } from "@/components/ui/spinner";
 import InputComponent from "./Input";
 import { useSearchParams } from "next/navigation";
+import { toastError, toastSuccess } from "@/lib/toast";
+import type { AxiosError } from "axios";
 
 interface IToDo {
   todo: string;
@@ -39,6 +41,14 @@ const CreateTodo = ({ closeModal }: { closeModal: () => void }) => {
   const paramsIsFinished = searchParams.get("finished") || null;
   const paramsPage = Number(searchParams.get("page")) || 1;
 
+  interface IError {
+    response: {
+      data: {
+        message: string;
+      };
+    };
+  }
+
   const { mutate, isPending } = useMutation({
     mutationFn: (data: IToDo) => createTodo(data),
     onSuccess() {
@@ -59,6 +69,10 @@ const CreateTodo = ({ closeModal }: { closeModal: () => void }) => {
       });
 
       closeModal();
+      toastSuccess("To-do created succefully!");
+    },
+    onError(err: AxiosError<{ message: string }>) {
+      toastError(err.response?.data.message);
     },
   });
 

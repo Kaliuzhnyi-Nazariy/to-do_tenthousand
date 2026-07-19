@@ -3,6 +3,7 @@ import CreateToDoModal from "@/components/Modal/CreateToDoModal";
 import Search from "@/components/Search";
 import TodoList from "@/components/TodoList";
 import { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <CreateToDoModal />
         <TodoList />
       </Suspense>
+      <Toaster position="top-right" />
     </main>
   );
 }
