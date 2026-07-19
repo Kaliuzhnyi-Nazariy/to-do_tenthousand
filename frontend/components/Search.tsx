@@ -42,7 +42,11 @@ const Search = () => {
   const searchValue = methods.watch("search");
 
   useEffect(() => {
-    handleQueryParams({ search: searchValue });
+    const delayDebounceFn = setTimeout(() => {
+      handleQueryParams({ search: searchValue });
+    }, 400);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [searchValue]);
 
   return (
