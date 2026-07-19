@@ -3,7 +3,7 @@ import { ctrlWrapper, errorHandler } from "../helper";
 import service from "../service/toDo";
 
 const getToDo = async (req: Request, res: Response, next: NextFunction) => {
-  const { search, filter, isFinished, page, filterBy } = req.query;
+  const { search, order, isFinished, page, orderBy } = req.query;
 
   if (!page) return errorHandler(404, "Page is required");
 
@@ -13,8 +13,8 @@ const getToDo = async (req: Request, res: Response, next: NextFunction) => {
 
   const response = await service.getToDo({
     search: search as string | null,
-    filterBy: filterBy as string | null,
-    filter: filter as "ASC" | "DESC",
+    orderBy: orderBy as string | null,
+    order: order as "ASC" | "DESC",
     isFinished: isFinishedBool,
     page: Number(page),
   });

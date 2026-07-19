@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const todoValidation = z.object({
-  title: z.string(),
+  todo: z.string(),
   priority: z
     .number()
     .min(1, "Max priority is 1")

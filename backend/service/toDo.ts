@@ -2,44 +2,58 @@ import db from "../db/init";
 
 const getToDo = async ({
   search,
-  filterBy = "created_at",
-  filter = "DESC",
+  orderBy = "created_at",
+  order = "DESC",
   isFinished,
   page,
 }: {
   search: string | null;
-  filterBy: string | null;
-  filter: "ASC" | "DESC";
+  orderBy: string | null;
+  order: "ASC" | "DESC";
   isFinished?: boolean;
   page: number;
 }) => {
-  const offset = (page - 1) * 5;
+  const LIMIT = 5;
+  const offset = (page - 1) * LIMIT;
 
-  // console.log({ search, filter, isFinished, page });
+  const count = (
+    await db.query(
+      "SELECT COUNT (*) FROM todos  WHERE ($1::text IS NULL OR todo LIKE '%'|| $1::text || '%') AND ($2::boolean IS NULL OR status = $2::boolean)",
+      [search, isFinished],
+    )
+  ).rows[0].count;
 
-  return (
+  const todos = (
     await db.query(
       `SELECT * FROM todos 
  WHERE ($1::text IS NULL OR todo LIKE '%'|| $1::text || '%') 
    AND ($2::boolean IS NULL OR status = $2::boolean) 
- ORDER BY ${filterBy} ${filter} 
- LIMIT 5 OFFSET $3`,
-      [search, isFinished, offset],
+ ORDER BY ${orderBy} ${order} 
+ LIMIT $4 OFFSET $3`,
+      [search, isFinished, offset, LIMIT],
     )
   ).rows;
+
+  return {
+    todos,
+    meta: {
+      limit: LIMIT,
+      allTodos: Number(count),
+    },
+  };
 };
 
 const addToDo = async ({
-  title,
+  todo,
   priority,
 }: {
-  title: string;
+  todo: string;
   priority: number;
 }) => {
   return (
     await db.query(
       "INSERT INTO todos (todo, priority) VALUES ($1, $2) RETURNING *",
-      [title, priority],
+      [todo, priority],
     )
   ).rows;
 };
