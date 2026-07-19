@@ -26,7 +26,7 @@ const getToDo = async ({
   const todos = (
     await db.query(
       `SELECT * FROM todos 
- WHERE ($1::text IS NULL OR todo LIKE '%'|| $1::text || '%') 
+ WHERE ($1::text IS NULL OR todo ILIKE '%'|| $1::text || '%') 
    AND ($2::boolean IS NULL OR status = $2::boolean) 
  ORDER BY ${orderBy} ${order} 
  LIMIT $4 OFFSET $3`,
