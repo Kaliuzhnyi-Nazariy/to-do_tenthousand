@@ -18,7 +18,7 @@ const getToDo = async ({
 
   const count = (
     await db.query(
-      "SELECT COUNT (*) FROM todos  WHERE ($1::text IS NULL OR todo LIKE '%'|| $1::text || '%') AND ($2::boolean IS NULL OR status = $2::boolean)",
+      "SELECT COUNT (*) FROM todos  WHERE ($1::text IS NULL OR todo ILIKE '%'|| $1::text || '%') AND ($2::boolean IS NULL OR status = $2::boolean)",
       [search, isFinished],
     )
   ).rows[0].count;
