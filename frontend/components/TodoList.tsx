@@ -36,6 +36,7 @@ const TodoList = () => {
         isFinished: paramsIsFinished,
         page: paramsPage,
       }),
+    retry: false,
   });
 
   const page = Math.ceil(data?.meta.allTodos / data?.meta.limit);
