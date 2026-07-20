@@ -51,7 +51,7 @@ const TodoList = () => {
   return (
     <div className="flex flex-col flex-1 min-h-0 w-full mt-2">
       {data && data?.todos.length > 0 ? (
-        <ul className="flex flex-col max-md:flex-1 min-h-0 gap-3 list-none w-full overflow-auto">
+        <ul className="flex flex-col flex-1 min-h-0 gap-3 list-none w-full overflow-auto">
           {data.todos.map(
             ({
               id,

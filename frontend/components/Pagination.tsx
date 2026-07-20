@@ -54,6 +54,12 @@ const PaginationComponent = ({ pages }: { pages: number }) => {
             <PaginationItem key={p}>
               <PaginationLink
                 onClick={() => handlePagePagination(String(numberPage))}
+                isActive={numberPage == Number(currentPage)}
+                className={`${
+                  numberPage == Number(currentPage)
+                    ? "bg-primary text-white"
+                    : ""
+                } `}
               >
                 {numberPage}
               </PaginationLink>
