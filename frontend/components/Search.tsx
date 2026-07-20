@@ -52,7 +52,10 @@ const Search = () => {
   return (
     <div className="flex flex-col w-full">
       <FormProvider {...methods}>
-        <form className="flex items-center gap-1">
+        <form
+          className="flex items-center gap-1"
+          onSubmit={(e) => e.preventDefault()}
+        >
           {" "}
           <h5>Search: </h5>
           <InputComponent<{ search: string }> name="search" />
