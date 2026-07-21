@@ -13,4 +13,8 @@ export const api = axios.create({
     NEXT_PUBLIC_ENVIRONMENT === "production"
       ? NEXT_PUBLIC_BACKEND_URL
       : NEXT_PUBLIC_LOCAL_BACKEND_URL,
+  headers: {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    Pragma: "no-cache",
+  },
 });

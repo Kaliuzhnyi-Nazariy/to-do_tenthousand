@@ -1,4 +1,5 @@
-// import CreateTodo from "@/components/CreateTodo";
+export const dynamic = "force-dynamic";
+
 import CreateToDoModal from "@/components/Modal/CreateToDoModal";
 import Search from "@/components/Search";
 import TodoList from "@/components/TodoList";

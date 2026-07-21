@@ -15,8 +15,6 @@ export const getTodos = async ({
   isFinished?: string | null;
   page: number;
 }) => {
-  // console.log({ orderBy });
-
   return (
     await api.get(rootURL, {
       params: {
