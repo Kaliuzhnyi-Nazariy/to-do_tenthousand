@@ -2,13 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { getTodos } from "../features/requests";
-import {
-  useSearchParams,
-  // useRouter, usePathname
-} from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import TodoItem from "./TodoItem";
 import PaginationComponent from "./Pagination";
 import { Spinner } from "./ui/spinner";
+import { getTodoQueryKey } from "@/utils/queryHelper";
 
 const TodoList = () => {
   const searchParams = useSearchParams();
@@ -20,14 +18,7 @@ const TodoList = () => {
   const paramsPage = Number(searchParams.get("page")) || 1;
 
   const { data, isFetched } = useQuery({
-    queryKey: [
-      "todoFetch",
-      paramsSearch,
-      paramsPage,
-      paramsIsFinished,
-      paramsOrderBy,
-      paramsOrder,
-    ],
+    queryKey: getTodoQueryKey(searchParams),
     queryFn: () =>
       getTodos({
         search: paramsSearch,

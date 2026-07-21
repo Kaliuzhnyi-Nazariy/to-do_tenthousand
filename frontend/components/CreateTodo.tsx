@@ -11,6 +11,7 @@ import InputComponent from "./Input";
 import { useSearchParams } from "next/navigation";
 import { toastError, toastSuccess } from "@/lib/toast";
 import type { AxiosError } from "axios";
+import { getTodoQueryKey } from "@/utils/queryHelper";
 
 interface IToDo {
   todo: string;
@@ -35,19 +36,11 @@ const CreateTodo = ({ closeModal }: { closeModal: () => void }) => {
 
   const searchParams = useSearchParams();
 
-  const paramsSearch = searchParams.get("search") || null;
-  const paramsOrderBy = searchParams.get("orderby") || null;
-  const paramsOrder = searchParams.get("order") || null;
-  const paramsIsFinished = searchParams.get("finished") || null;
-  const paramsPage = Number(searchParams.get("page")) || 1;
-
-  interface IError {
-    response: {
-      data: {
-        message: string;
-      };
-    };
-  }
+  // const paramsSearch = searchParams.get("search") || null;
+  // const paramsOrderBy = searchParams.get("orderby") || null;
+  // const paramsOrder = searchParams.get("order") || null;
+  // const paramsIsFinished = searchParams.get("finished") || null;
+  // const paramsPage = Number(searchParams.get("page")) || 1;
 
   const { mutate, isPending } = useMutation({
     mutationFn: (data: IToDo) => createTodo(data),
@@ -58,14 +51,7 @@ const CreateTodo = ({ closeModal }: { closeModal: () => void }) => {
       });
 
       client.invalidateQueries({
-        queryKey: [
-          "todoFetch",
-          paramsSearch,
-          paramsPage,
-          paramsIsFinished,
-          paramsOrderBy,
-          paramsOrder,
-        ],
+        queryKey: getTodoQueryKey(searchParams),
       });
 
       closeModal();
