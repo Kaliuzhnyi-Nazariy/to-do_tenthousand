@@ -51,7 +51,8 @@ const CreateTodo = ({ closeModal }: { closeModal: () => void }) => {
       });
 
       client.invalidateQueries({
-        queryKey: getTodoQueryKey(searchParams),
+        queryKey: ["todoFetch"],
+        // queryKey: getTodoQueryKey(searchParams),
       });
 
       closeModal();

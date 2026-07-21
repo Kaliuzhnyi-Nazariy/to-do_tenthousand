@@ -28,6 +28,9 @@ const TodoList = () => {
         page: paramsPage,
       }),
     retry: false,
+    staleTime: 0,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
   });
 
   const page = Math.ceil(data?.meta.allTodos / data?.meta.limit);
